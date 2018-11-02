@@ -1,10 +1,6 @@
 require_relative 'base_builder'
 
 class StateBuilder < BaseBuilder
-  def self.get_entity_class_name
-    State
-  end
-
   def name(name)
     get_instance.name = name
   end
