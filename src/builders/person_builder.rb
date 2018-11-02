@@ -1,37 +1,35 @@
-class PersonBuilder
-  def initialize
-    @person = Person.new
+require_relative 'base_builder'
+
+class PersonBuilder < BaseBuilder
+  def self.get_entity_class_name
+    Person
   end
 
   def name(name)
-    @person.name = name
+    get_instance.name = name
   end
 
   def email(email)
-    @person.email = email
+    get_instance.email = email
   end
 
   def weight(weight)
-    @person.weight = weight
+    get_instance.weight = weight
   end
 
   def mother(mother)
-    @person.mother = mother
+    get_instance.mother = mother
   end
 
   def father(father)
-    @person.father = father
+    get_instance.father = father
   end
 
   def state(state)
-    @person.state = state
+    get_instance.state = state
   end
 
   def pet(pet)
-    @person.pets << pet
-  end
-
-  def get_instance
-    @person
+    get_instance.pets << pet
   end
 end

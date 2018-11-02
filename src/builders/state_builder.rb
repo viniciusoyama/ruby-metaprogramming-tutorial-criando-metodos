@@ -1,25 +1,24 @@
-class StateBuilder
-  def initialize
-    @state = State.new
+require_relative 'base_builder'
+
+class StateBuilder < BaseBuilder
+  def self.get_entity_class_name
+    State
   end
 
   def name(name)
-    @state.name = name
+    get_instance.name = name
   end
 
   def type(type)
-    @state.type = type
+    get_instance.type = type
   end
 
   def weight(weight)
-    @state.weight = weight
+    get_instance.weight = weight
   end
 
   def size_in_square_meters(size_in_square_meters)
-    @state.size_in_square_meters = size_in_square_meters
+    get_instance.size_in_square_meters = size_in_square_meters
   end
 
-  def get_instance
-    @state
-  end
 end
