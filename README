@@ -1,0 +1,10 @@
+Com ruby o já instalado
+
+# Setup
+
+- `gem install bundler`
+- `bundle install`
+
+# Rodar specs
+
+- `bundle exec rspec`
