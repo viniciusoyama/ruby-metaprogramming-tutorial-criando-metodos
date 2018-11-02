@@ -1,11 +1,21 @@
-require_relative 'person'
+require_relative 'builders/person_builder'
+require_relative 'builders/pet_builder'
+require_relative 'builders/state_builder'
+
+require_relative 'entities/person'
+require_relative 'entities/pet'
+require_relative 'entities/state'
 
 class DSLEvaluator
   class World
     attr_reader :persons
+    attr_reader :pets
+    attr_reader :states
 
     def initialize
       @persons = {}
+      @pets = {}
+      @states = {}
     end
 
     def person(name, &block)
@@ -16,35 +26,23 @@ class DSLEvaluator
       person.name = name
       @persons[name] = person
     end
-  end
 
-  class PersonBuilder
-    def initialize
-      @person = Person.new
+    def pet(name, &block)
+      builder = PetBuilder.new
+      builder.instance_eval(&block)
+
+      pet = builder.get_instance
+      pet.name = name
+      @pets[name] = pet
     end
 
-    def name(name)
-      @person.name = name
-    end
+    def state(abbreviation, &block)
+      builder = StateBuilder.new
+      builder.instance_eval(&block)
 
-    def email(email)
-      @person.email = email
-    end
-
-    def weight(weight)
-      @person.weight = weight
-    end
-
-    def mother(mother)
-      @person.mother = mother
-    end
-
-    def father(father)
-      @person.father = father
-    end
-
-    def get_instance
-      @person
+      state = builder.get_instance
+      state.abbreviation = abbreviation
+      @states[abbreviation] = state
     end
   end
 
@@ -56,8 +54,14 @@ class DSLEvaluator
     world.persons.each_pair do |_, person|
       person.mother = world.persons[person.mother]
       person.father = world.persons[person.father]
+      person.state = world.states[person.state]
+      person.pets = world.pets.values.select { |pet| person.pets.include?(pet.name) }
     end
 
-    world.persons
+    {
+      "persons" => world.persons,
+      "states" => world.states,
+      "pets" => world.pets
+    }
   end
 end
