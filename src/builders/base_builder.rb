@@ -12,4 +12,10 @@ class BaseBuilder
     entity_class_name = builder_class_name.gsub("Builder", "")
     Kernel.const_get(entity_class_name)
   end
+
+  def self.assignable_entity_attribute(attribute_name)
+    define_method(attribute_name) do |attribute_value|
+      get_instance.send("#{attribute_name}=", attribute_value)
+    end
+  end
 end

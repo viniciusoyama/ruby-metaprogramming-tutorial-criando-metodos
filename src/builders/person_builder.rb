@@ -1,29 +1,12 @@
 require_relative 'base_builder'
 
 class PersonBuilder < BaseBuilder
-  def name(name)
-    get_instance.name = name
-  end
-
-  def email(email)
-    get_instance.email = email
-  end
-
-  def weight(weight)
-    get_instance.weight = weight
-  end
-
-  def mother(mother)
-    get_instance.mother = mother
-  end
-
-  def father(father)
-    get_instance.father = father
-  end
-
-  def state(state)
-    get_instance.state = state
-  end
+  assignable_entity_attribute :name
+  assignable_entity_attribute :email
+  assignable_entity_attribute :weight
+  assignable_entity_attribute :mother
+  assignable_entity_attribute :father
+  assignable_entity_attribute :state
 
   def pet(pet)
     get_instance.pets << pet
